@@ -1,0 +1,32 @@
+name: Run Python Script in Docker
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Compose
+      run: docker-compose up -d
+
+    - name: Wait for services to be ready
+      run: |
+        while ! docker-compose exec -T service_name_here curl -f http://localhost/healthz; do
+          echo "Waiting for services..."
+          sleep 5
+        done
+
+    - name: Run Python script
+      run: docker-compose run service_name_here python sample.py
+
+    - name: Tear down Docker Compose
+      if: always()
+      run: docker-compose down

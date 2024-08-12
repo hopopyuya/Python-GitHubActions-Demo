@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  python3:
+    restart: always
+    build: .
+    platform: linux/amd64
+    ports:
+      - 8888:8888
+    container_name: 'python3'
+    working_dir: '/work/'
+    tty: true
+    volumes:
+      - ./workspace:/work
