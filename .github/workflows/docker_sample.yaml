@@ -23,7 +23,7 @@ jobs:
       run: docker-compose up -d
 
     - name: Run Python script
-      run: python sample.py
+      run: docker-compose run python3 python sample.py
 
     - name: Tear down Docker Compose
       if: always()
