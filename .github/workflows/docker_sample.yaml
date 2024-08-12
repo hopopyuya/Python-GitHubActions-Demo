@@ -22,13 +22,6 @@ jobs:
     - name: Set up Docker Compose
       run: docker-compose up -d
 
-    - name: Wait for services to be ready
-      run: |
-        while ! docker-compose exec -T service_name_here curl -f http://localhost/healthz; do
-          echo "Waiting for services..."
-          sleep 5
-        done
-
     - name: Run Python script
       run: docker-compose run service_name_here python sample.py
 
